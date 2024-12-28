@@ -1,19 +1,13 @@
 import asyncio
 from hydrogram import Client, filters
 from hydrogram.errors import FloodWait
-from dotenv import load_dotenv
-import os
+from config import API_ID, API_HASH, BOT_TOKEN
 
-load_dotenv()
-
-# Environment variables
-API_ID = os.getenv("API_ID")
-API_HASH = os.getenv("API_HASH")
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+client = Client('broadcast_bot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
 IS_BROADCASTING = False
 
-@client.on_message(filters.command("broadcast") & filters.user(SUDOERS))
+@client.on_message(filters.command("broadcast"))
 async def broadcast_message(client, message):
     global IS_BROADCASTING
     if IS_BROADCASTING:
@@ -36,8 +30,10 @@ async def broadcast_message(client, message):
     sent_chats = 0
     sent_users = 0
 
+    # Broadcast to chats
     if "-nobot" not in message.text:
-        schats = [dialog.chat.id for dialog in await client.get_dialogs() if dialog.chat.type in ["group", "supergroup", "channel"]]
+        dialogs = await client.get_dialogs()
+        schats = [dialog.chat.id for dialog in dialogs if dialog.chat.type in ["group", "supergroup", "channel"]]
         for chat_id in schats:
             try:
                 if x:
@@ -51,8 +47,10 @@ async def broadcast_message(client, message):
             except Exception as e:
                 print(f"Failed to send message to chat {chat_id}: {e}")
 
+    # Broadcast to users
     if "-user" in message.text:
-        susers = [dialog.chat.id for dialog in await client.get_dialogs() if dialog.chat.type == "private"]
+        dialogs = await client.get_dialogs()
+        susers = [dialog.chat.id for dialog in dialogs if dialog.chat.type == "private"]
         for user_id in susers:
             try:
                 if x:
