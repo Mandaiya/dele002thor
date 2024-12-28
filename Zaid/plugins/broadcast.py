@@ -13,7 +13,7 @@ sudoers = '1556830659'
 
 IS_BROADCASTING = False
 
-@Client.on_message(filters.command("broadcast") & filters.user(SUDOERS))
+@Client.on_message(filters.command("broadcast")
 async def broadcast_message(client, message):
     global IS_BROADCASTING
     if IS_BROADCASTING:
