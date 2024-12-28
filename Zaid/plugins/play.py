@@ -124,7 +124,7 @@ btnn =[[Button.inline("✯ cʟᴏꜱᴇ ✯", data="cls")]]
 
 
 #play
-@Zaid.on(events.NewMessage(pattern="^[/]play"))
+@Zaid.on(events.NewMessage(pattern="^[/?]play"))
 @AssistantAdd
 async def play(event):
     title = ' '.join(event.text[5:])
@@ -213,7 +213,7 @@ async def play(event):
                     stream_type=StreamType().pulse_stream,
                 )
                 add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-                caption = f"➻ **sᴛᴀʀᴛᴇᴅ sᴛʀᴇᴀᴍɪɴɢ**\n\n🌸 **ᴛɪᴛʟᴇ :** [{songname}]({link})\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}"
+                caption = f"➜ <b>⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌⑊◞◠◟>**\n\n✣ ✧Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({link})\n✣🔹**Ｓᴜɢɢᴇsᴛᴇᴅ🔹:** {from_user}"
                 await event.client.send_file(chat_id, fotoplay, caption=caption, buttons=btnn)
                 await botman.delete()
             except Exception as ep:
@@ -226,7 +226,7 @@ async def play(event):
 
 #end
 
-@Zaid.on(events.NewMessage(pattern="^[/?!]end"))
+@Zaid.on(events.NewMessage(pattern="^[/?]end"))
 @is_admin
 async def vc_end(event, perm):
     chat_id = event.chat_id
@@ -237,12 +237,12 @@ async def vc_end(event, perm):
         pass
     if chat_id in QUEUE:
         clear_queue(chat_id)
-        await event.reply(f"**Streaming Ended**")
+        await event.reply(f"**➤ ѕєє үσυ ηєχт тιмє ⌛| queries contact @universe_we_are**")
     else:
-        await event.reply("**Ntg is playing ~**")
+        await event.reply("**The music/video isn’t playing, Try playing any song /play song name ~**")
 
 
-@Zaid.on(events.NewMessage(pattern="^[?!/]vplay"))
+@Zaid.on(events.NewMessage(pattern="^[?/]vplay"))
 @AssistantAdd
 async def vplay(event):
     if Config.HEROKU_MODE == "ENABLE":
@@ -265,9 +265,9 @@ async def vplay(event):
         or not replied
         and not title
     ):
-        return await event.client.send_file(chat_id, Config.CMD_IMG, caption="**Give Me Your Query Which You want to Stream**\n\n **Example**: `/vplay Nira Ishq Bass boosted`", buttons=btnn)
+        return await event.client.send_file(chat_id, Config.CMD_IMG, caption="**Provide some input to play your song**\n\n **Example**: `/play adiyee`", buttons=btnn)
     if replied and not replied.video and not replied.document:
-        xnxx = await event.reply("**🔄 Processing Query... Please Wait!**")
+        xnxx = await event.reply("**» Getting your request > \n\nkindly wait for the response from the Universe 😈😈😈**")
         query = event.text.split(maxsplit=1)[1]
         search = ytsearch(query)
         RESOLUSI = 720
@@ -296,7 +296,7 @@ async def vplay(event):
             if chat_id in QUEUE:
                 pos = add_to_queue(
                     chat_id, songname, ytlink, url, "Video", RESOLUSI)
-                caption = f"**✨ ᴀᴅᴅᴇᴅ ᴛᴏ ǫᴜᴇᴜᴇ ᴀᴛ** {pos}\n\n❄ **ᴛɪᴛʟᴇ :** [{songname}]({url})\n⏱ **ᴅᴜʀᴀᴛɪᴏɴ :** {duration} ᴍɪɴᴜᴛᴇs\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}"
+                caption = f"**🌚 Requested Next Song #☱◜◝◟◡> {pos}\n\n**🚀 T𝐢𝐭𝐥𝐞 🚀 :** [{songname}]({url})\n🎧 T𝗂𝗺𝗲 𝓉𝗈 𝗛𝗲𝗮𝗋 🎧** {duration} ᴍɪɴᴜᴛᴇs\n🍼 **🔹𝒓𝑒𝓺𝓾𝑒𝓼𝓽𝑒𝒹 𝒯𝗈🔹 :**🌍 U𝗇𝗂𝗏𝑒𝗋𝗌𝑒 N𝑒𝓉𝗐𝗈𝗋𝗞𝗌 🌍"
                 await xnxx.delete()
                 await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
             else:
@@ -315,7 +315,7 @@ async def vplay(event):
                         RESOLUSI)
                     await xnxx.delete()
                     await event.client.send_file(event.chat_id,
-                        f"➻ **sᴛᴀʀᴛᴇᴅ sᴛʀᴇᴀᴍɪɴɢ**\n\n🌸 **ᴛɪᴛʟᴇ :** [{songname}]({url})\n⏱ **ᴅᴜʀᴀᴛɪᴏɴ :** {duration} ᴍɪɴᴜᴛᴇs\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}, buttons=btnn",
+                        f"➜ <b>⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌⑊◞◠◟>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌 \n\n**✧ Sᴏɴɢ Nᴀᴍᴇ ✦** [{songname}]({url})\n\n**⧖ T-Ƭᴀᴋᴇɴ ⧗** {duration} ᴍɪɴᴜᴛᴇs\n\n>⚙️🧑‍💻 User** {from_user}, buttons=btnn",
                         link_preview=False,
                     )
                 except Exception as ep:
@@ -335,7 +335,7 @@ async def vplay(event):
             songname = "Telegram Video Player"
         if chat_id in QUEUE:
             pos = add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
-            caption = f"**✨ ᴀᴅᴅᴇᴅ ᴛᴏ ǫᴜᴇᴜᴇ ᴀᴛ** {pos}\n\n❄ **ᴛɪᴛʟᴇ :** [{songname}]({url})\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}"
+            caption = f"**🌚 Requested Next Song #☱◜◝◟◡>** {pos}\n\n**🚀 T𝐢𝐭𝐥𝐞 🚀 :** [{songname}]({url})\n♀ **🔹Ｓᴜɢɢᴇsᴛᴇᴅ🔹** {from_user}"
             await event.client.send_file(chat_id, ngantri, caption=caption, buttons=btnn)
             await xnxx.delete()
         else:
@@ -359,13 +359,13 @@ async def vplay(event):
                 clear_queue(chat_id)
                 await xnxx.edit(f"`{ep}`")
     else:
-        xnxx = await event.reply("**🔄 Processing Query... Please Wait!**")
+        xnxx = await event.reply("**» Getting your request > \n\nkindly wait for the response from the Universe 😈😈😈**")
         query = event.text.split(maxsplit=1)[1]
         search = ytsearch(query)
         RESOLUSI = 720
         hmmm = HighQualityVideo()
         if search == 0:
-            await xnxx.edit("**Unable To featch your Query**")
+            await xnxx.edit("**Unable To featch Query, try playing the full name of the song**")
         else:
             songname = search[0]
             title = search[0]
@@ -384,7 +384,7 @@ async def vplay(event):
             if chat_id in QUEUE:
                 pos = add_to_queue(
                     chat_id, songname, ytlink, url, "Video", RESOLUSI)
-                caption = f"**✨ ᴀᴅᴅᴇᴅ ᴛᴏ ǫᴜᴇᴜᴇ ᴀᴛ** {pos}\n\n❄ **ᴛɪᴛʟᴇ :** [{songname}]({url})\n⏱ **ᴅᴜʀᴀᴛɪᴏɴ :** {duration} ᴍɪɴᴜᴛᴇs\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}"
+                caption = f"🌚 Requested Next Song #☱◜◝◟◡> {pos}\n\n🚀 T𝐢𝐭𝐥𝐞 🚀 :** [{songname}]({url})\n**🎧 T𝗂𝗺𝗲 𝓉𝗈 𝗛𝗲𝗮𝗋 🎧 :** {duration} ᴍɪɴᴜᴛᴇs\n🍼 **🔹𝒓𝑒𝓺𝓾𝑒𝓼𝓽𝑒𝒹 𝒯𝗈🔹:** {from_user}"
                 await xnxx.delete()
                 await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
             else:
@@ -401,7 +401,7 @@ async def vplay(event):
                         url,
                         "Video",
                         RESOLUSI)
-                    caption = f"➻ **sᴛᴀʀᴛᴇᴅ sᴛʀᴇᴀᴍɪɴɢ**\n\n✨ **ᴛɪᴛʟᴇ :** [{songname}]({url})\n⏱ **ᴅᴜʀᴀᴛɪᴏɴ :** {duration} ᴍɪɴᴜᴛᴇs\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}"
+                    caption = f"➜ <b>⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌⑊◞◠◟>\n\n✧ Sᴏɴɢ Nᴀᴍᴇ ✦:** [{songname}]({url})\n**⧖ T-Ƭᴀᴋᴇɴ ⧗:** {duration} ᴍɪɴᴜᴛᴇs\n>⚙️🧑‍💻 User:** {from_user}"
                     await xnxx.delete()
                     await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
                 except Exception as ep:
@@ -420,11 +420,11 @@ async def vc_playlist(event, perm):
         chat_queue = get_queue(chat_id)
         if len(chat_queue) == 1:
             await event.reply(
-                f"**�PlAYLIST:**\n• [{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}`",
+                f"**� Music library:**\n• [{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}`",
                 link_preview=False,
             )
         else:
-            PLAYLIST = f"**🎧 PLAYLIST:**\n**• [{chat_queue[0][0]}]({chat_queue[0][2]})** | `{chat_queue[0][3]}` \n\n**• Upcoming Streaming:**"
+            PLAYLIST = f"** Music library:**\n**• [{chat_queue[0][0]}]({chat_queue[0][2]})** | `{chat_queue[0][3]}` \n\n**• Next on the live:**"
             l = len(chat_queue)
             for x in range(1, l):
                 hmm = chat_queue[x][0]
@@ -434,7 +434,7 @@ async def vc_playlist(event, perm):
                     f"**#{x}** - [{hmm}]({hmmm}) | `{hmmmm}`"
             await event.reply(PLAYLIST, link_preview=False)
     else:
-        await event.reply("**Ntg is Streaming**")
+        await event.reply("**The music/video isn’t playing, Try playing any song /play song name ~**")
 
 
 
@@ -442,10 +442,10 @@ async def vc_playlist(event, perm):
 
 
 #leavevc
-@Zaid.on(events.NewMessage(pattern="^[?!/]leavevc"))
+@Zaid.on(events.NewMessage(pattern="^[?/]leavevc"))
 @is_admin
 async def leavevc(event, perm):
-    xnxx = await event.reply("Processing")
+    xnxx = await event.reply("|-𝗢n-𝗀𝗈𝗂𝗇𝗀-|")
     chat_id = event.chat_id
     from_user = vcmention(event.sender)
     if from_user:
@@ -453,30 +453,30 @@ async def leavevc(event, perm):
             await call_py.leave_group_call(chat_id)
         except (NotInGroupCallError, NoActiveGroupCall):
             pass
-        await xnxx.edit("**Left the voice chat** `{}`".format(str(event.chat_id)))
+        await xnxx.edit("**Forced from the voice chat** `{}`".format(str(event.chat_id)))
     else:
         await xnxx.edit(f"**Sorry {owner} not on Voice Chat**")
 
 
 
-@Zaid.on(events.NewMessage(pattern="^[?!/]skip"))
+@Zaid.on(events.NewMessage(pattern="^[?/]skip"))
 @is_admin
 async def vc_skip(event, perm):
     chat_id = event.chat_id
     if len(event.text.split()) < 2:
         op = await skip_current_song(chat_id)
         if op == 0:
-            await event.reply("**Nothing Is Streaming**")
+            await event.reply("**➤ ѕєє үσυ ηєχт тιмє ⌛| queries contact @universe_we_are**")
         elif op == 1:
-            await event.reply("empty queue, leaving voice chat")
+            await event.reply("empty queue, leaving you | Byee-buyee 😒")
         else:
             await event.reply(
-                f"**⏭ Skipped**\n**🎧 Now Playing** - [{op[0]}]({op[1]})",
+                f"**♬ Bypass**\n**🎧 Now streaming** - [{op[0]}]({op[1]})",
                 link_preview=False,
             )
     else:
         skip = event.text.split(maxsplit=1)[1]
-        DELQUE = "**Removing Following Songs From Queue:**"
+        DELQUE = "**deleting respected music From requested:**"
         if chat_id in QUEUE:
             items = [int(x) for x in skip.split(" ") if x.isdigit()]
             items.sort(reverse=True)
@@ -488,33 +488,33 @@ async def vc_skip(event, perm):
             await event.reply(DELQUE)
 
 
-@Zaid.on(events.NewMessage(pattern="^[?!/]pause"))
+@Zaid.on(events.NewMessage(pattern="^[?/]pause"))
 @is_admin
 async def vc_pause(event, perm):
     chat_id = event.chat_id
     if chat_id in QUEUE:
         try:
             await call_py.pause_stream(chat_id)
-            await event.reply("**Streaming Paused**")
+            await event.reply("**| Stream frozen |**")
         except Exception as e:
-            await event.reply(f"**ERROR:** `{e}`")
+            await event.reply(f"**ERROR:AREA51 - alert!!!** `{e}`")
     else:
-        await event.reply("**Nothing Is Playing**")
+        await event.reply("****The music/video isn’t playing, Try playing any song /play song name ~****")
 
 
 
-@Zaid.on(events.NewMessage(pattern="^[?!/]resume"))
+@Zaid.on(events.NewMessage(pattern="^[?/]resume"))
 @is_admin
 async def vc_resume(event, perm):
     chat_id = event.chat_id
     if chat_id in QUEUE:
         try:
             await call_py.resume_stream(chat_id)
-            await event.reply("**Streaming Started Back 🔙**")
+            await event.reply("**Streaming Started | on track**")
         except Exception as e:
-            await event.reply(f"**ERROR:** `{e}`")
+            await event.reply(f"**ERROR:AREA51 - alert!!!** `{e}`")
     else:
-        await event.reply("**Nothing Is Streaming**")
+        await event.reply("**The music/video isn’t playing, Try playing any song /play song name ~**")
 
 
 @call_py.on_stream_end()
