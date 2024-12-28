@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = Client('broadcast_bot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN, sudoers=SUDOERS)
-
 api_id = '28045580'
 api_hash = '83001e24418ec7f54bfe95d4e390419f'
 bot_token = '7010331289:AAF68YreEc5JVgkoa9QvXld0fHDd7Ib9EtE'
