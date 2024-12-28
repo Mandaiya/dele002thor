@@ -8,8 +8,8 @@ import aiohttp
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps, ImageChops
 from youtubesearchpython.__future__ import VideosSearch
  
-MUSIC_BOT_NAME = "Telethon Music"
-YOUTUBE_IMG_URL = "https://telegra.ph/file/95d96663b73dbf278f28c.jpg"
+MUSIC_BOT_NAME = "SVD Musicz"
+YOUTUBE_IMG_URL = "https://telegra.ph/file/0bc40f80a86e4d5e4927c.mp4"
 files = [] 
 
 for filename in os.listdir("./thumbnail"): 
@@ -75,7 +75,7 @@ async def gen_thumb(videoid):
         bg = Image.open(f"thumbnail/{anime}.png")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
-        background = image2.filter(filter=ImageFilter.BoxBlur(30))
+        background = image2.filter(filter=ImageFilter.BoxBlur(50))
         enhancer = ImageEnhance.Brightness(background)
         background = enhancer.enhance(0.6)
         cir = Image.open(f"thumbnail/IMG_20221129_201846_195.png") 
