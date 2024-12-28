@@ -3,8 +3,10 @@ from pyromod import listen
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from pyrogram.enums import ChatMembersFilter
+from Config import SUDOERS, adminlist
+from dotenv import load_dotenv
 
-from config import SUDOERS, adminlist
+load_dotenv()
 
 app = Client("annie_bot")
 IS_BROADCASTING = False
