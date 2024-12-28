@@ -5,6 +5,11 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from config import Config
 from dotenv import load_dotenv
 
+try:
+    ...
+except errors.FloodWaitError as e:
+    print('Flood wait for ', e.seconds)
+
 load_dotenv()
 
 # Replace these with your own values
