@@ -75,7 +75,7 @@ async def broadcast_message(client, message):
 
 async def main():
     await client.start()  # Start the client
-    await client.idle()   # Keep the client running
+    await client.run_until_disconnected()  # Keep the client running
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
