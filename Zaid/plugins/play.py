@@ -28,7 +28,7 @@ from youtubesearchpython import VideosSearch
 fotoplay = "https://telegra.ph/file/b6402152be44d90836339.jpg"
 ngantri = "https://telegra.ph/file/b6402152be44d90836339.jpg"
 from Zaid import call_py, Zaid, client as Client
-owner = "1669178360"
+owner = "655594746"
 from Zaid.helpers.yt_dlp import bash, ytdl
 from Zaid.helpers.chattitle import CHAT_TITLE
 from Zaid.helpers.queues import (
@@ -124,7 +124,7 @@ btnn =[[Button.inline("✯ cʟᴏꜱᴇ ✯", data="cls")]]
 
 
 #play
-@Zaid.on(events.NewMessage(pattern="^[?!/]play"))
+@Zaid.on(events.NewMessage(pattern="^[/]play"))
 @AssistantAdd
 async def play(event):
     title = ' '.join(event.text[5:])
@@ -142,14 +142,14 @@ async def play(event):
         or not replied
         and not title
     ):
-        return await event.client.send_file(chat_id, Config.CMD_IMG, caption="**Give Me Your Query Which You want to Play**\n\n **Example**: `/play Nira Ishq Bass boosted`", buttons=btnn)
+        return await event.client.send_file(chat_id, Config.CMD_IMG, caption="**Provide some input to play your song**\n\n **Example**: `/play adiyee`", buttons=btnn)
     elif replied and not replied.audio and not replied.voice or not replied:
         botman = await event.reply("🔎")
         query = event.text.split(maxsplit=1)[1]
         search = ytsearch(query)
         if search == 0:
             await botman.edit(
-                "**Can't Find Song** Try searching with More Specific Title"
+                "**Can't Find Song** Try searching with More Specific Title or try searching with full song name"
             )     
         else:
             songname = search[0]
@@ -170,7 +170,7 @@ async def play(event):
                 return
             if chat_id in QUEUE:
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
-                caption = f"✨ **ᴀᴅᴅᴇᴅ ᴛᴏ ǫᴜᴇᴜᴇ ᴀᴛ** {pos}\n\n❄ **ᴛɪᴛʟᴇ :** [{songname}]({url})\n⏱ **ᴅᴜʀᴀᴛɪᴏɴ :** {duration} ᴍɪɴᴜᴛᴇs\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}"
+                caption = f"🌚 Requested Next Song #☱◜◝◟◡>** {pos}\n\n❄ **🚀 T𝐢𝐭𝐥𝐞 🚀** [{songname}]({url})\n🎧 T𝗂𝗺𝗲 𝓉𝗈 𝗛𝗲𝗮𝗋 🎧** {duration} ᴍɪɴᴜᴛᴇs\n🔹**𝒓𝑒𝓺𝓾𝑒𝓼𝓽𝑒𝒹 𝒯𝗈🔹 :**🌍 U𝗇𝗂𝗏𝑒𝗋𝗌𝑒 N𝑒𝓉𝗐𝗈𝗋𝗞𝗌 🌍"
                 await botman.delete()
                 await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
             else:
@@ -183,7 +183,7 @@ async def play(event):
                         stream_type=StreamType().pulse_stream,
                     )
                     add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
-                    caption = f"➻ **sᴛᴀʀᴛᴇᴅ sᴛʀᴇᴀᴍɪɴɢ**\n\n🌸 **ᴛɪᴛʟᴇ :** [{songname}]({url})\n⏱ **ᴅᴜʀᴀᴛɪᴏɴ :** {duration} ᴍɪɴᴜᴛᴇs\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}"
+                    caption = f"➜ <b>⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌⑊◞◠◟>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌 </b>\n\n✧ **Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({url})\n⏱ **⧖T-Ƭᴀᴋᴇɴ ⧗ :** {duration} ᴍɪɴᴜᴛᴇs\n🥀 **>⚙️🧑‍💻 User :** {from_user}"
                     await botman.delete()
                     await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
                 except Exception as ep:
@@ -195,12 +195,12 @@ async def play(event):
         dl = await replied.download_media()
         link = f"https://t.me/c/{chat.id}/{event.reply_to_msg_id}"
         if replied.audio:
-            songname = "Telegram Music Player"
+            songname = "Telegram Audio Note"
         elif replied.voice:
             songname = "Voice Note"
         if chat_id in QUEUE:
             pos = add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-            caption = f"✨ **ᴀᴅᴅᴇᴅ ᴛᴏ ǫᴜᴇᴜᴇ ᴀᴛ** {pos}\n\n❄ **ᴛɪᴛʟᴇ :** [{songname}]({url})\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}"
+            caption = f"🌚 Requested Next Song #☱◜◝◟◡> {pos}\n\n🎧 T𝗂𝗺𝗲 𝓉𝗈 𝗛𝗲𝗮𝗋 🎧 : [{songname}]({url})\n🔹**Ｓᴜɢɢᴇsᴛᴇᴅ🔹:** {from_user}"
             await event.client.send_file(chat_id, ngantri, caption=caption, buttons=btnn)
             await botman.delete()
         else:
