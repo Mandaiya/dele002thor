@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 
 class Config(object):
     API_ID = int(os.environ.get("APP_ID", "28045580"))
