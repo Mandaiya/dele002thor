@@ -1,16 +1,9 @@
-import os
 import asyncio
 from hydrogram import Client, filters
 from hydrogram.errors import FloodWait
-from dotenv import load_dotenv
+from config import API_ID, API_HASH, BOT_TOKEN
 
-load_dotenv()
-
-# Environment variables
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-API_ID = os.getenv("API_ID")
-API_HASH = os.getenv("API_HASH")
-
+client = Client('broadcast_bot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
 IS_BROADCASTING = False
 
@@ -38,38 +31,35 @@ async def broadcast_message(client, message):
     sent_users = 0
 
     # Broadcast to chats
-    if "-nobot" not in message.text:
-        dialogs = await client.get_dialogs()
-        schats = [dialog.chat.id for dialog in dialogs if dialog.chat.type in ["group", "supergroup", "channel"]]
-        for chat_id in schats:
-            try:
-                if x:
-                    await client.forward_messages(chat_id, y, [x], as_copy=True)
-                else:
-                    await client.send_message(chat_id, query)
-                sent_chats += 1
-                await asyncio.sleep(0.2)
-            except FloodWait as e:
-                await asyncio.sleep(e.value)
-            except Exception as e:
-                print(f"Failed to send message to chat {chat_id}: {e}")
+    dialogs = await client.get_dialogs()
+    schats = [dialog.chat.id for dialog in dialogs if dialog.chat.type in ["group", "supergroup", "channel"]]
+    for chat_id in schats:
+        try:
+            if x:
+                await client.forward_messages(chat_id, y, [x], as_copy=True)
+            else:
+                await client.send_message(chat_id, query)
+            sent_chats += 1
+            await asyncio.sleep(0.2)
+        except FloodWait as e:
+            await asyncio.sleep(e.value)
+        except Exception as e:
+            print(f"Failed to send message to chat {chat_id}: {e}")
 
     # Broadcast to users
-    if "-user" in message.text:
-        dialogs = await client.get_dialogs()
-        susers = [dialog.chat.id for dialog in dialogs if dialog.chat.type == "private"]
-        for user_id in susers:
-            try:
-                if x:
-                    await client.forward_messages(user_id, y, [x], as_copy=True)
-                else:
-                    await client.send_message(user_id, query)
-                sent_users += 1
-                await asyncio.sleep(0.2)
-            except FloodWait as e:
-                await asyncio.sleep(e.value)
-            except Exception as e:
-                print(f"Failed to send message to user {user_id}: {e}")
+    susers = [dialog.chat.id for dialog in dialogs if dialog.chat.type == "private"]
+    for user_id in susers:
+        try:
+            if x:
+                await client.forward_messages(user_id, y, [x], as_copy=True)
+            else:
+                await client.send_message(user_id, query)
+            sent_users += 1
+            await asyncio.sleep(0.2)
+        except FloodWait as e:
+            await asyncio.sleep(e.value)
+        except Exception as e:
+            print(f"Failed to send message to user {user_id}: {e}")
 
     await message.reply(f"Broadcast completed: Sent to {sent_chats} chats and {sent_users} users.")
     IS_BROADCASTING = False
