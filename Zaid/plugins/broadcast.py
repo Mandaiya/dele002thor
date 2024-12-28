@@ -2,7 +2,6 @@ import os
 import asyncio
 from hydrogram import Client, filters
 from hydrogram.errors import FloodWait
-from Config import API_ID, API_HASH, BOT_TOKEN, SUDOERS
 from dotenv import load_dotenv
 
 load_dotenv()
