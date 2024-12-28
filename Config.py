@@ -16,3 +16,4 @@ class Config(object):
     ASSISTANT_ID = int(os.environ.get("ASSISTANT_ID", "7029090289")) # telegram I'd not Username
     AUTO_LEAVE_TIME = int(os.environ.get("AUTO_LEAVE_ASSISTANT_TIME", "54000")) # in seconds
     AUTO_LEAVE = os.environ.get('AUTO_LEAVING_ASSISTANT', None) # Change it to "True"
+    SUDOERS = list(map(int, os.getenv("SUDOERS", "1556830659").split()))  # Assuming you list SUDOERS in your .env
