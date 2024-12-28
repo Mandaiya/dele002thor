@@ -4,7 +4,12 @@ from hydrogram.errors import FloodWait
 from dotenv import load_dotenv
 import os
 
-client = Client('broadcast_bot', API_ID=API_ID, API_HASH=API_HASH, BOT_TOKEN=BOT_TOKEN)
+load_dotenv()
+
+# Environment variables
+API_ID = os.getenv("API_ID")
+API_HASH = os.getenv("API_HASH")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 IS_BROADCASTING = False
 
