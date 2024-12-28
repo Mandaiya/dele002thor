@@ -12,7 +12,7 @@ bot_token = '7010331289:AAF68YreEc5JVgkoa9QvXld0fHDd7Ib9EtE'
 
 IS_BROADCASTING = False
 
-@client.on_message(filters.command("broadcast") & filters.user(SUDOERS))
+@Client.on_message(filters.command("broadcast") & filters.user(SUDOERS))
 async def broadcast_message(client, message):
     global IS_BROADCASTING
     if IS_BROADCASTING:
