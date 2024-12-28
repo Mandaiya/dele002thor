@@ -3,13 +3,9 @@ from hydrogram import Client, filters
 from hydrogram.errors import FloodWait
 from dotenv import load_dotenv
 from telegram import bot
+from config import API_ID, API_HASH, BOT_TOKEN
 
-# Environment variables
-API_ID = os.getenv("API_ID")
-API_HASH = os.getenv("API_HASH")
-BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-
-client = Client('broadcast_bot', api_id=api_id, api_hash=api_hash, bot_token=bot_token)
+client = Client('broadcast_bot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
 IS_BROADCASTING = False
 
