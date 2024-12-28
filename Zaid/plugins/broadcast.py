@@ -1,21 +1,12 @@
 import asyncio
 from telethon import TelegramClient, events
-from telethon.errors import FloodWait
+from telethon.errors.rpcerrorlist import FloodWait
 from telethon.tl.types import ChannelParticipantsAdmins
-from config import Config
-from dotenv import load_dotenv
-
-try:
-    ...
-except errors.FloodWaitError as e:
-    print('Flood wait for ', e.seconds)
-
-load_dotenv()
 
 # Replace these with your own values
-API_ID = os.getenv("API_ID")
-API_HASH = os.getenv("API_HASH")
-BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+api_id = 'YOUR_API_ID'
+api_hash = 'YOUR_API_HASH'
+bot_token = 'YOUR_BOT_TOKEN'
 
 client = TelegramClient('broadcast_bot', api_id, api_hash).start(bot_token=bot_token)
 
@@ -52,7 +43,7 @@ async def broadcast_message(event):
     if "-nobot" not in message.message:
         sent = 0
         pin = 0
-        chats = [chat_id for chat_id in await client.get_dialogs() if chat_id.is_group]
+        chats = [dialog.id for dialog in await client.get_dialogs() if dialog.is_group]
         
         for i in chats:
             try:
@@ -116,11 +107,15 @@ async def broadcast_message(event):
     if "-assistant" in message.message:
         aw = await message.reply("Broadcasting to assistants...")
         text = "Broadcast to assistants started.\n\n"
-        assistants = [assistant_id]  # Define your assistant bot IDs here
+        assistants = [123456789]  # Replace with your assistant bot IDs
 
         for num in assistants:
             sent = 0
-            assistant_client = await client.clone(num)
+            assistant_client = await client.clone()
+            assistant_client.session.set_dc(2, "149.154.167.51", 443)  # Use the correct data center
+            assistant_client.session.auth_key = client.session.auth_key
+            assistant_client.session.user_id = num
+
             async for dialog in assistant_client.iter_dialogs():
                 try:
                     await assistant_client.forward_messages(
