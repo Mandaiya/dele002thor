@@ -5,15 +5,18 @@ from telethon import events, Button
 PM_START_TEXT = """
 ʜᴇʏᴀ! {}
 
-• ɪ'ᴍ ᴀ ꜱɪᴍᴘʟᴇ ᴛᴇʟᴇɢʀᴀᴍ ᴍᴜꜱɪᴄ ʙᴏᴛ.
-• ɪ ᴄᴀɴ ᴘʟᴀʏ ꜱᴏɴɢꜱ ɪɴ ʏᴏᴜʀ ᴠᴏɪᴄᴇ.
-• ᴛʜɪꜱ ʙᴏᴛ ʙᴀꜱᴇᴅ ᴏɴ ᴛᴇʟᴇᴛʜᴏɴ. ꜱᴏ ɪᴛ'ꜱ ᴘʀᴏᴠɪᴅᴇ ᴍᴏʀᴇ ꜱᴛᴀʙɪʟɪᴛʏ ꜰʀᴏᴍ ᴏᴛʜᴇʀ ʙᴏᴛꜱ!
-• ɪ ᴄᴀɴ ᴅᴏ ᴏᴛʜᴇʀ ᴛʜɪɴɢꜱ ʟɪᴋᴇ ᴘɪɴꜱ ᴇᴛᴄꜱ.
+• I am a simple music bot on Telegram, here to play your favorite tunes!.
+• Just let me know what song you want, and I’ll play it for you!.
+• This bot is just for listening to music; there are no additional management features
+• I can do a lot of things, but I’m still in development. Please handle me with care!.
 
+  We are the Universe People – initially a network for selling VPS, we have since evolved into providing bots for user use.
+
+  Having queries - | Contact the Universe - Networks -☯- | @universe_we_are | -☯-
 ➻ **ᴄʟɪᴄᴋ ᴏɴ ʜᴇʟᴘ ʙᴜᴛᴛᴏɴ ꜰᴏʀ ᴍᴏʀᴇ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ**.
 """
 
-@Zaid.on(events.NewMessage(pattern="^[?!/]start$"))
+@Zaid.on(events.NewMessage(pattern="^[?/]start$"))
 async def start(event):
     if Config.MANAGEMENT_MODE == "ENABLE":
         return
@@ -22,11 +25,11 @@ async def start(event):
              Config.START_IMG,
              caption=PM_START_TEXT.format(event.sender.first_name), 
              buttons=[
-        [Button.url("✨ ᴀᴅᴅ ᴍᴇ", f"https://t.me/{BOT_USERNAME}?startgroup=true"), Button.inline("🥀 ʜᴇʟᴘ", data="help")]])
+        [Button.url("☢ Kidnap Me ", f"https://t.me/{BOT_USERNAME}?startgroup=true"), Button.inline("🚁​ save ", data="help")]])
        return
 
     if event.is_group:
-       await event.reply("**ʜᴇʏ! ɪ'ᴍ ꜱᴛɪʟʟ ᴀʟɪᴠᴇ ✅**")
+       await event.reply("**ʜᴇʏ! ɪ'ᴍ ꜱᴛɪʟʟ ᴀʟɪᴠᴇ! and working fine ! Thank you for checking up!**")
        return
 
 
