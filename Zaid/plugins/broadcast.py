@@ -1,81 +1,78 @@
-import os
 import asyncio
-from hydrogram import Client, filters
-from hydrogram.errors import FloodWait
-from dotenv import load_dotenv
+from pyromod import listen
+from pyrogram import Client, filters
+from pyrogram.errors import FloodWait
+from pyrogram.enums import ChatMembersFilter
 
-load_dotenv()
+from config import SUDOERS, adminlist
 
-api_id = '28045580'
-api_hash = '83001e24418ec7f54bfe95d4e390419f'
-bot_token = '7010331289:AAF68YreEc5JVgkoa9QvXld0fHDd7Ib9EtE'
-sudoers = '1556830659'
-
+app = Client("annie_bot")
 IS_BROADCASTING = False
 
-# Create a client instance with necessary credentials
-client = Client('bot', api_id=api_id, api_hash=api_hash, bot_token=bot_token)
-
-@client.on_message(filters.command("broadcast"))
+@app.on_message(filters.command("broadcast") & filters.user(SUDOERS))
 async def broadcast_message(client, message):
     global IS_BROADCASTING
-    if IS_BROADCASTING:
-        return await message.reply("A broadcast is already in progress.")
-    
     if message.reply_to_message:
         x = message.reply_to_message.id
         y = message.chat.id
-        query = None
     else:
         if len(message.command) < 2:
-            return await message.reply("Please provide a message to broadcast.")
+            return await message.reply_text("Please provide a message to broadcast.")
         query = message.text.split(None, 1)[1]
-        x = None
-        y = None
+
+        # Handle flags
+        pin = "-pin" in query
+        loud_pin = "-pinloud" in query
+        user_broadcast = "-user" in query
+
+        query = query.replace("-pin", "").replace("-pinloud", "").replace("-user", "").strip()
+
+        if not query:
+            return await message.reply_text("Broadcast message cannot be empty.")
 
     IS_BROADCASTING = True
-    await message.reply("Starting broadcast...")
-
-    sent_chats = 0
-    sent_users = 0
+    await message.reply_text("Broadcasting... Please wait.")
 
     # Broadcast to chats
-    dialogs = await client.get_dialogs()
-    schats = [dialog.chat.id for dialog in dialogs if dialog.chat.type in ["group", "supergroup", "channel"]]
-    for chat_id in schats:
+    sent = 0
+    pin_count = 0
+    async for dialog in app.get_dialogs():
         try:
-            if x:
-                await client.forward_messages(chat_id, y, [x], as_copy=True)
-            else:
-                await client.send_message(chat_id, query)
-            sent_chats += 1
+            m = (
+                await app.forward_messages(dialog.chat.id, y, x)
+                if message.reply_to_message
+                else await app.send_message(dialog.chat.id, query)
+            )
+            if pin or loud_pin:
+                try:
+                    await m.pin(disable_notification=not loud_pin)
+                    pin_count += 1
+                except Exception as e:
+                    print(f"Failed to pin in {dialog.chat.id}: {e}")
+            sent += 1
             await asyncio.sleep(0.2)
-        except FloodWait as e:
-            await asyncio.sleep(e.value)
+        except FloodWait as fw:
+            await asyncio.sleep(fw.value)
         except Exception as e:
-            print(f"Failed to send message to chat {chat_id}: {e}")
+            print(f"Failed to send message to {dialog.chat.id}: {e}")
 
-    # Broadcast to users
-    susers = [dialog.chat.id for dialog in dialogs if dialog.chat.type == "private"]
-    for user_id in susers:
-        try:
-            if x:
-                await client.forward_messages(user_id, y, [x], as_copy=True)
-            else:
-                await client.send_message(user_id, query)
-            sent_users += 1
-            await asyncio.sleep(0.2)
-        except FloodWait as e:
-            await asyncio.sleep(e.value)
-        except Exception as e:
-            print(f"Failed to send message to user {user_id}: {e}")
-
-    await message.reply(f"Broadcast completed: Sent to {sent_chats} chats and {sent_users} users.")
+    await message.reply_text(f"Broadcast completed. Sent to {sent} chats. Pinned in {pin_count} chats.")
     IS_BROADCASTING = False
 
-async def main():
-    await client.start()  # Start the client
-    await client.run_until_disconnected()  # Keep the client running
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+@app.on_message(filters.command("clean_admins") & filters.user(SUDOERS))
+async def auto_clean(client, message):
+    adminlist.clear()
+    async for dialog in app.get_dialogs():
+        try:
+            async for member in app.get_chat_members(dialog.chat.id, filter=ChatMembersFilter.ADMINISTRATORS):
+                if member.privileges.can_manage_video_chats:
+                    if dialog.chat.id not in adminlist:
+                        adminlist[dialog.chat.id] = []
+                    adminlist[dialog.chat.id].append(member.user.id)
+        except Exception as e:
+            print(f"Failed to fetch admins for {dialog.chat.id}: {e}")
+    await message.reply_text("Admin list refreshed.")
+
+
+app.run()
