@@ -2,6 +2,7 @@ import asyncio
 from hydrogram import Client, filters
 from hydrogram.errors import FloodWait
 from dotenv import load_dotenv
+from telegram import bot
 
 # Environment variables
 API_ID = os.getenv("API_ID")
