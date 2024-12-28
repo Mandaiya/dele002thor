@@ -13,7 +13,10 @@ sudoers = '1556830659'
 
 IS_BROADCASTING = False
 
-@Client.on_message(filters.command("broadcast"))
+# Create a client instance with necessary credentials
+client = Client('bot', api_id=api_id, api_hash=api_hash, bot_token=bot_token)
+
+@client.on_message(filters.command("broadcast"))
 async def broadcast_message(client, message):
     global IS_BROADCASTING
     if IS_BROADCASTING:
@@ -71,8 +74,8 @@ async def broadcast_message(client, message):
     IS_BROADCASTING = False
 
 async def main():
-    await client.start()
-    await client.idle()
+    await client.start()  # Start the client
+    await client.idle()   # Keep the client running
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
