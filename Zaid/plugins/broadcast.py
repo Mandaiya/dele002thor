@@ -1,7 +1,6 @@
 import asyncio
 from hydrogram import Client, filters
 from hydrogram.errors import FloodWait
-from Zaid import app 
 from dotenv import load_dotenv
 
 # Environment variables
