@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 class Config(object):
-    API_ID = int(os.environ.get("API_ID", "28045580"))
+    API_ID = os.environ.get("API_ID", "28045580")
     API_HASH = os.environ.get("API_HASH", "83001e24418ec7f54bfe95d4e390419f")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "7010331289:AAF68YreEc5JVgkoa9QvXld0fHDd7Ib9EtE")
     STRING_SESSION = os.environ.get("STRING_SESSION", "1BVtsOIcBu46eUr3hJ2DdavEiCwMyWK29RU6TH_nQNu5Tb1FCfvy0UWhDTSDM_Fqq7-qZVsJDlUdtg6xq-i9NXEi3NgdoIhuRfW2cd7u6lDi8qcQL4D-1iGLpwjcw625nt-Hwo8ve-bLCpagqE-mrA3GvlY9c2PkFyin4dRarwWWYhlLL7JOuN1_lL4v8jv-JyHRcgJOaxv_IusFHAp4aO6h-vkMj65CkfGiD3vMmP9QbLow5ZWdocet-VT9AgcPZUhJWq938TqyBBluHxKT_QYRedcAe0f6UVC74tKRq0HsOlm8Lft71ee0_j5bwO4hTiSYqiEmXtj23gOi_oAvyf01WEAtd3mM=")
