@@ -1,8 +1,11 @@
+import os
 import asyncio
 from hydrogram import Client, filters
 from hydrogram.errors import FloodWait
 from Config import API_ID, API_HASH, BOT_TOKEN, SUDOERS
+from dotenv import load_dotenv
 
+load_dotenv()
 
 client = Client('broadcast_bot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
