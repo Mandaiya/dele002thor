@@ -172,8 +172,13 @@ async def play(event):
             if chat_id in QUEUE:
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
                 caption = f"**🌚 Requested Next Song #☱◜◝◟◡>** {pos}\n\n  **🚀 T𝐢𝐭𝐥𝐞 🚀** [{songname}]({url})\n🎧 T𝗂𝗺𝗲 𝓉𝗈 𝗛𝗲𝗮𝗋 🎧** {duration} ᴍɪɴᴜᴛᴇs\n🔹**𝒓𝑒𝓺𝓾𝑒𝓼𝓽𝑒𝒹 𝒯𝗈🔹 :\n**🌍 U𝗇𝗂𝗏𝑒𝗋𝗌𝑒 N𝑒𝓉𝗐𝗈𝗋𝗞𝗌 🌍"
-                await botman.delete()
+                thumb = f"cache/{videoid}_kaithumb.png"
+            if os.path.isfile(thumb):
                 await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
+            else:
+                 # Handle the error, maybe send a default thumbnail or an error message
+                await event.client.send_message(chat_id, "Thumbnail file not found.")
+
             else:
                 try:
                     await call_py.join_group_call(
@@ -185,8 +190,9 @@ async def play(event):
                     )
                     add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
                     caption = f"➜ ⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌\n\n✧ **Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({url})\n\n⏱ **⧖ T-Ƭᴀᴋᴇɴ ⧗ :** {duration} ᴍɪɴᴜᴛᴇs\n\n🥀 **>⚙️🧑‍💻 User :** {from_user}"
-                    await botman.delete()
-                    await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
+                    thumb = f"cache/{videoid}_kaithumb.png"
+            if os.path.isfile(thumb):
+                await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
                 except Exception as ep:
                     clear_queue(chat_id)
                     await botman.edit(f"`{ep}`")
