@@ -12,10 +12,6 @@ MUSIC_BOT_NAME = "SVD Musicz"
 YOUTUBE_IMG_URL = "https://telegra.ph/file/0bc40f80a86e4d5e4927c.mp4"
 CUSTOM_THUMBNAIL = "kaithumb.png" 
 
-for filename in os.listdir("./thumbnail"): 
-     if filename.endswith("png"): 
-         files.append(filename[:-4])
- 
 def changeImageSize(maxWidth, maxHeight, image):
     widthRatio = maxWidth / image.size[0]
     heightRatio = maxHeight / image.size[1]
