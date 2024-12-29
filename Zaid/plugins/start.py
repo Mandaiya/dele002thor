@@ -15,7 +15,7 @@ Hello! {}
  ✾ Having queries - | Contact the Universe - Networks -☯- \n| @universe_we_are | -☯-
 
 
-☣ **ᴄʟɪᴄᴋ ᴏɴ ʜᴇʟᴘ ʙᴜᴛᴛᴏɴ ꜰᴏʀ ᴍᴏʀᴇ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ**.
+☣ **ᴄʟɪᴄᴋ ᴏɴ SAVE  ʙᴜᴛᴛᴏɴ ꜰᴏʀ ᴍᴏʀᴇ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ**.
 """
 
 @Zaid.on(events.NewMessage(pattern="^[?/]start$"))
