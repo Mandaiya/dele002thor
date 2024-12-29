@@ -10,7 +10,7 @@ from youtubesearchpython.__future__ import VideosSearch
  
 MUSIC_BOT_NAME = "SVD Musicz"
 YOUTUBE_IMG_URL = "https://telegra.ph/file/0bc40f80a86e4d5e4927c.mp4"
-files = [] 
+CUSTOM_THUMBNAIL = "kaithumb.png" 
 
 for filename in os.listdir("./thumbnail"): 
      if filename.endswith("png"): 
@@ -35,9 +35,8 @@ def add_corners(im):
  
  
 async def gen_thumb(videoid):
-    anime = random.choice(files)
-    if os.path.isfile(f"cache/{videoid}_{anime}.png"):
-        return f"cache/{videoid}_{anime}.png"
+    if os.path.isfile(f"cache/{videoid}_kaithumb.png"):
+        return f"cache/{videoid}_kaithumb.png"
     url = f"https://www.youtube.com/watch?v={videoid}"
     try:
         results = VideosSearch(url, limit=1)
@@ -72,7 +71,7 @@ async def gen_thumb(videoid):
         
  
         youtube = Image.open(f"cache/thumb{videoid}.png")
-        bg = Image.open(f"thumbnail/{anime}.png")
+        bg = Image.open(f"thumbnail/{CUSTOM_THUMBNAIL}")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
         background = image2.filter(filter=ImageFilter.BoxBlur(50))
@@ -131,8 +130,8 @@ async def gen_thumb(videoid):
             os.remove(f"cache/thumb{videoid}.png")
         except:
             pass
-        background.save(f"cache/{videoid}_{anime}.png")
-        return f"cache/{videoid}_{anime}.png"
+        background.save(f"cache/{videoid}_kaithumb.png")
+        return f"cache/{videoid}_kaithumb.png"
     except Exception as e:
         print(e)
         return YOUTUBE_IMG_URL
