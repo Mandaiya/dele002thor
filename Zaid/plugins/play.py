@@ -180,8 +180,8 @@ async def play(event):
                 await event.client.send_message(chat_id, "Thumbnail file not found.")
 
             else:
-                try:
-                    await call_py.join_group_call(
+            try:
+                 await call_py.join_group_call(
                         chat_id,
                         AudioPiped(
                             ytlink,
