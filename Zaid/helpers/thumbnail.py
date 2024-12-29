@@ -130,4 +130,4 @@ async def gen_thumb(videoid, chat_id):
         return f"cache/{videoid}_kaithumb.png"
     except Exception as e:
         print(e)
-        return YOUTUBE_IMG_URL
+        return f"cache/{videoid}_kaithumb.png"
