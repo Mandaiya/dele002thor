@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 from youtubesearchpython.__future__ import VideosSearch
  
 MUSIC_BOT_NAME = "SVD Musicz"
-YOUTUBE_IMG_URL = "https://telegra.ph/file/0bc40f80a86e4d5e4927c.mp4"
+YOUTUBE_IMG_URL = ""
 CUSTOM_THUMBNAIL = "kaithumb.png" 
 
 def changeImageSize(maxWidth, maxHeight, image):
