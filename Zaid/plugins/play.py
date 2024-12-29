@@ -170,7 +170,7 @@ async def play(event):
                 return
             if chat_id in QUEUE:
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
-                caption = f"🌚 Requested Next Song #☱◜◝◟◡>** {pos}\n\n❄ **🚀 T𝐢𝐭𝐥𝐞 🚀** [{songname}]({url})\n🎧 T𝗂𝗺𝗲 𝓉𝗈 𝗛𝗲𝗮𝗋 🎧** {duration} ᴍɪɴᴜᴛᴇs\n🔹**𝒓𝑒𝓺𝓾𝑒𝓼𝓽𝑒𝒹 𝒯𝗈🔹 :**🌍 U𝗇𝗂𝗏𝑒𝗋𝗌𝑒 N𝑒𝓉𝗐𝗈𝗋𝗞𝗌 🌍"
+                caption = f"**🌚 Requested Next Song #☱◜◝◟◡>** {pos}\n\n  **🚀 T𝐢𝐭𝐥𝐞 🚀** [{songname}]({url})\n🎧 T𝗂𝗺𝗲 𝓉𝗈 𝗛𝗲𝗮𝗋 🎧** {duration} ᴍɪɴᴜᴛᴇs\n🔹**𝒓𝑒𝓺𝓾𝑒𝓼𝓽𝑒𝒹 𝒯𝗈🔹 :\n**🌍 U𝗇𝗂𝗏𝑒𝗋𝗌𝑒 N𝑒𝓉𝗐𝗈𝗋𝗞𝗌 🌍"
                 await botman.delete()
                 await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
             else:
@@ -183,7 +183,7 @@ async def play(event):
                         stream_type=StreamType().pulse_stream,
                     )
                     add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
-                    caption = f"➜ <b>⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌⑊◞◠◟>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌 </b>\n\n✧ **Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({url})\n⏱ **⧖T-Ƭᴀᴋᴇɴ ⧗ :** {duration} ᴍɪɴᴜᴛᴇs\n🥀 **>⚙️🧑‍💻 User :** {from_user}"
+                    caption = f"➜ ⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌\n\n✧ **Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({url})\n\n⏱ **⧖ T-Ƭᴀᴋᴇɴ ⧗ :** {duration} ᴍɪɴᴜᴛᴇs\n\n🥀 **>⚙️🧑‍💻 User :** {from_user}"
                     await botman.delete()
                     await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
                 except Exception as ep:
@@ -213,7 +213,7 @@ async def play(event):
                     stream_type=StreamType().pulse_stream,
                 )
                 add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-                caption = f"➜ <b>⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌⑊◞◠◟>**\n\n✣ ✧Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({link})\n✣🔹**Ｓᴜɢɢᴇsᴛᴇᴅ🔹:** {from_user}"
+                caption = f"➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>**\n\n✣ ✧Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({link})\n\n✣🔹**Ｓᴜɢɢᴇsᴛᴇᴅ🔹:** {from_user}"
                 await event.client.send_file(chat_id, fotoplay, caption=caption, buttons=btnn)
                 await botman.delete()
             except Exception as ep:
@@ -296,7 +296,7 @@ async def vplay(event):
             if chat_id in QUEUE:
                 pos = add_to_queue(
                     chat_id, songname, ytlink, url, "Video", RESOLUSI)
-                caption = f"**🌚 Requested Next Song #☱◜◝◟◡> {pos}\n\n**🚀 T𝐢𝐭𝐥𝐞 🚀 :** [{songname}]({url})\n🎧 T𝗂𝗺𝗲 𝓉𝗈 𝗛𝗲𝗮𝗋 🎧** {duration} ᴍɪɴᴜᴛᴇs\n🍼 **🔹𝒓𝑒𝓺𝓾𝑒𝓼𝓽𝑒𝒹 𝒯𝗈🔹 :**🌍 U𝗇𝗂𝗏𝑒𝗋𝗌𝑒 N𝑒𝓉𝗐𝗈𝗋𝗞𝗌 🌍"
+                caption = f"**🌚 Requested Next Song #☱◜◝◟◡> {pos}\n\n**🚀 T𝐢𝐭𝐥𝐞 🚀 :** [{songname}]({url})\n\n🎧 T𝗂𝗺𝗲 𝓉𝗈 𝗛𝗲𝗮𝗋 🎧** {duration} ᴍɪɴᴜᴛᴇs\n🍼 **🔹𝒓𝑒𝓺𝓾𝑒𝓼𝓽𝑒𝒹 𝒯𝗈🔹 :\n**🌍 U𝗇𝗂𝗏𝑒𝗋𝗌𝑒 N𝑒𝓉𝗐𝗈𝗋𝗞𝗌 🌍"
                 await xnxx.delete()
                 await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
             else:
@@ -315,7 +315,7 @@ async def vplay(event):
                         RESOLUSI)
                     await xnxx.delete()
                     await event.client.send_file(event.chat_id,
-                        f"➜ <b>⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌⑊◞◠◟>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌 \n\n**✧ Sᴏɴɢ Nᴀᴍᴇ ✦** [{songname}]({url})\n\n**⧖ T-Ƭᴀᴋᴇɴ ⧗** {duration} ᴍɪɴᴜᴛᴇs\n\n>⚙️🧑‍💻 User** {from_user}, buttons=btnn",
+                        f"➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌 \n\n**✧ Sᴏɴɢ Nᴀᴍᴇ ✦** [{songname}]({url})\n\n**⧖ T-Ƭᴀᴋᴇɴ ⧗** {duration} ᴍɪɴᴜᴛᴇs\n\n>⚙️🧑‍💻 User** {from_user}",
                         link_preview=False,
                     )
                 except Exception as ep:
@@ -352,7 +352,7 @@ async def vplay(event):
                     stream_type=StreamType().pulse_stream,
                 )
                 add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
-                caption = f"➻ **sᴛᴀʀᴛᴇᴅ sᴛʀᴇᴀᴍɪɴɢ**\n\n✨ **ᴛɪᴛʟᴇ :** [{songname}]({link})\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}"
+                caption = f"➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>\n\n✨ **ᴛɪᴛʟᴇ :** [{songname}]({link})\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}"
                 await xnxx.delete()
                 await event.client.send_file(chat_id, fotoplay, caption=caption, buttons=btnn)
             except Exception as ep:
@@ -401,7 +401,7 @@ async def vplay(event):
                         url,
                         "Video",
                         RESOLUSI)
-                    caption = f"➜ <b>⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌⑊◞◠◟>\n\n✧ Sᴏɴɢ Nᴀᴍᴇ ✦:** [{songname}]({url})\n**⧖ T-Ƭᴀᴋᴇɴ ⧗:** {duration} ᴍɪɴᴜᴛᴇs\n>⚙️🧑‍💻 User:** {from_user}"
+                    caption = f"➜ <b>⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>\n\n✧ Sᴏɴɢ Nᴀᴍᴇ ✦:** [{songname}]({url})\n**⧖ T-Ƭᴀᴋᴇɴ ⧗:** {duration} ᴍɪɴᴜᴛᴇs\n>⚙️🧑‍💻 User:** {from_user}"
                     await xnxx.delete()
                     await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
                 except Exception as ep:
