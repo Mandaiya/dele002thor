@@ -374,7 +374,7 @@ async def vplay(event):
             thumbnail = search[3]
             videoid = search[4]
             ctitle = await CHAT_TITLE(titlegc)
-            thumb = await gen_thumb(videoid)
+            thumb = await gen_thumb(videoid, chat_id)
             format = "best[height<=?720][width<=?1280]"
             try:
                 ytlink = await ytdl(format, url)
