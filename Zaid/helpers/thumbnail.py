@@ -129,5 +129,7 @@ async def gen_thumb(videoid, chat_id):
         background.save(f"cache/{videoid}_kaithumb.png")
         return f"cache/{videoid}_kaithumb.png"
     except Exception as e:
-        print(e)
-        return f"cache/{videoid}_kaithumb.png"
+    print(e)
+    # Choose a random thumbnail from the list
+    random_thumb = random.choice(YOUTUBE_IMG_URL)
+    return random_thumb
