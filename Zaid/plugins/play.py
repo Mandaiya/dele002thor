@@ -144,7 +144,7 @@ async def play(event):
     ):
         return await event.client.send_file(chat_id, Config.CMD_IMG, caption="**Provide some input to play your song**\n\n **Example**: `/play adiyee`", buttons=btnn)
     elif replied and not replied.audio and not replied.voice or not replied:
-        botman = await event.reply("🔎")
+        botman = await event.reply("📝")
         query = event.text.split(maxsplit=1)[1]
         search = ytsearch(query)
         if search == 0:
@@ -183,7 +183,7 @@ async def play(event):
                         stream_type=StreamType().pulse_stream,
                     )
                     add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
-                    caption = f"<blockquote>➜ ⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌><blockquote>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌\n\n✧ **Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({url})\n\n⏱ **⧖ T-Ƭᴀᴋᴇɴ ⧗ :** {duration} ᴍɪɴᴜᴛᴇs\n\n🥀 **>⚙️🧑‍💻 User :** {from_user}"
+                    caption = f"</b>➜ ⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌></b>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌\n\n✧ **Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({url})\n\n⏱ **⧖ T-Ƭᴀᴋᴇɴ ⧗ :** {duration} ᴍɪɴᴜᴛᴇs\n\n🥀 **>⚙️🧑‍💻 User :** {from_user}"
                     await botman.delete()
                     await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
                 except Exception as ep:
@@ -213,7 +213,7 @@ async def play(event):
                     stream_type=StreamType().pulse_stream,
                 )
                 add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-                caption = f"<blockquote>➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌><blockquote>**\n\n✣ ✧Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({link})\n\n✣🔹**Ｓᴜɢɢᴇsᴛᴇᴅ🔹:** {from_user}"
+                caption = f"⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>**\n\n✣ ✧Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({link})\n\n✣🔹**Ｓᴜɢɢᴇsᴛᴇᴅ🔹:** {from_user}"
                 await event.client.send_file(chat_id, fotoplay, caption=caption, buttons=btnn)
                 await botman.delete()
             except Exception as ep:
@@ -237,7 +237,7 @@ async def vc_end(event, perm):
         pass
     if chat_id in QUEUE:
         clear_queue(chat_id)
-        await event.reply(f"<blockquote>**➤ ѕєє үσυ ηєχт тιмє ⌛| queries contact @universe_we_are**<blockquote>")
+        await event.reply(f"<b>➤ ѕєє үσυ ηєχт тιмє ⌛| queries contact @universe_we_are<b>")
     else:
         await event.reply("**The music/video isn’t playing, Try playing any song /play song name ~**")
 
@@ -315,7 +315,7 @@ async def vplay(event):
                         RESOLUSI)
                     await xnxx.delete()
                     await event.client.send_file(event.chat_id,
-                        f"<blockquote>➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌><blockquote>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌 \n\n**✧ Sᴏɴɢ Nᴀᴍᴇ ✦** [{songname}]({url})\n\n**⧖ T-Ƭᴀᴋᴇɴ ⧗** {duration} ᴍɪɴᴜᴛᴇs\n\n>⚙️🧑‍💻 User** {from_user}",
+                        f"➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌 \n\n**✧ Sᴏɴɢ Nᴀᴍᴇ ✦** [{songname}]({url})\n\n**⧖ T-Ƭᴀᴋᴇɴ ⧗** {duration} ᴍɪɴᴜᴛᴇs\n\n>⚙️🧑‍💻 User** {from_user}",
                         link_preview=False,
                     )
                 except Exception as ep:
@@ -352,7 +352,7 @@ async def vplay(event):
                     stream_type=StreamType().pulse_stream,
                 )
                 add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
-                caption = f"<blockquote>➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌><blockquote>\n\n✨ **ᴛɪᴛʟᴇ :** [{songname}]({link})\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}"
+                caption = f"➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>\n\n✨ **ᴛɪᴛʟᴇ :** [{songname}]({link})\n🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {from_user}"
                 await xnxx.delete()
                 await event.client.send_file(chat_id, fotoplay, caption=caption, buttons=btnn)
             except Exception as ep:
@@ -401,7 +401,7 @@ async def vplay(event):
                         url,
                         "Video",
                         RESOLUSI)
-                    caption = f"<blockquote>➜ <b>⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌><blockquote>\n\n✧ Sᴏɴɢ Nᴀᴍᴇ ✦:** [{songname}]({url})\n**⧖ T-Ƭᴀᴋᴇɴ ⧗:** {duration} ᴍɪɴᴜᴛᴇs\n>⚙️🧑‍💻 User:** {from_user}"
+                    caption = f"➜ <b>⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>\n\n✧ Sᴏɴɢ Nᴀᴍᴇ ✦:** [{songname}]({url})\n**⧖ T-Ƭᴀᴋᴇɴ ⧗:** {duration} ᴍɪɴᴜᴛᴇs\n>⚙️🧑‍💻 User:** {from_user}"
                     await xnxx.delete()
                     await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
                 except Exception as ep:
@@ -466,7 +466,7 @@ async def vc_skip(event, perm):
     if len(event.text.split()) < 2:
         op = await skip_current_song(chat_id)
         if op == 0:
-            await event.reply("<blockquote>**➤ ѕєє үσυ ηєχт тιмє ⌛| queries contact @universe_we_are**<blockquote>")
+            await event.reply("<b>**➤ ѕєє үσυ ηєχт тιмє ⌛| queries contact @universe_we_are**<b>")
         elif op == 1:
             await event.reply("empty queue, leaving you | Byee-buyee 😒")
         else:
