@@ -1,20 +1,48 @@
 import os
 import re
 import textwrap
- 
-import random
+ import random
 import aiofiles
 import aiohttp
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps, ImageChops
 from youtubesearchpython.__future__ import VideosSearch
  
 MUSIC_BOT_NAME = "S-V-D Music"
-YOUTUBE_IMG_URLS = [
-    "https://telegra.ph/file/8e5a832da78d9cdc5472f.jpg",
-    "https://telegra.ph/file/6db754de9707eee737345.mp4",
-    "https://telegra.ph/file/ecc9233d3f09286fa560a.mp4",
-    "https://telegra.ph/file/0bc40f80a86e4d5e4927c.mp4"
+YOUTUBE_IMG_URLS = []
+
+FRIENDSHIP_QUOTES = [
+    "A friend is someone who knows all about you and still loves you.",
+    "Friendship is the only cement that will ever hold the world together.",
+    "Friends are the siblings we choose for ourselves."
 ]
+
+LOVE_QUOTES = [
+    "Love is composed of a single soul inhabiting two bodies.",
+    "The best thing to hold onto in life is each other.",
+    "You know you're in love when you can't fall asleep because reality is finally better than your dreams."
+]
+
+MOTIVATION_QUOTES = [
+    "Don't watch the clock; do what it does. Keep going.",
+    "The harder you work for something, the greater you'll feel when you achieve it.",
+    "Believe you can and you're halfway there."
+]
+
+COMEDY_QUOTES = [
+    "I'm not arguing, I'm just explaining why I'm right.",
+    "I finally realized that people are prisoners of their phones... that's why it's called a 'cell' phone.",
+    "Some people graduate with honors, I am just honored to graduate."
+]
+
+RANDOM_URLS = [
+    "https://telegra.ph/file/95d96663b73dbf278f28c.jpg",
+    "https://telegra.ph/file/2d541313460e3e10742c3.jpg",
+    "https://telegra.ph/file/5c3b30c9f2b1e6a35e0a2.jpg",
+    "https://telegra.ph/file/3f5d8071a2b4b3f57d8c9.jpg"
+]
+
+YOUTUBE_IMG_URLS.extend(RANDOM_URLS)
+RANDOM_QUOTES = FRIENDSHIP_QUOTES + LOVE_QUOTES + MOTIVATION_QUOTES + COMEDY_QUOTES
 
 async def fetch_lyrics(videoid):
     # Mock lyrics for demonstration
@@ -25,29 +53,9 @@ async def fetch_lyrics(videoid):
         "Chasing dreams in the dark."
     ]
     return random.choice(lyrics)
-files = [] 
 
-for filename in os.listdir("./thumbnail"): 
-     if filename.endswith("png"): 
-         files.append(filename[:-4])
- 
-def changeImageSize(maxWidth, maxHeight, image):
-    widthRatio = maxWidth / image.size[0]
-    heightRatio = maxHeight / image.size[1]
-    newWidth = int(widthRatio * image.size[0])
-    newHeight = int(heightRatio * image.size[1])
-    newImage = image.resize((newWidth, newHeight))
-    return newImage
- 
- 
-def add_corners(im):
-    bigsize = (im.size[0] * 3, im.size[1] * 3)
-    mask = Image.new('L', bigsize, 0)
-    ImageDraw.Draw(mask).ellipse((0, 0) + bigsize, fill=255)
-    mask = mask.resize(im.size, Image.ANTIALIAS)
-    mask = ImageChops.darker(mask, im.split()[-1])
-    im.putalpha(mask)
- 
+async def fetch_quote():
+    return random.choice(RANDOM_QUOTES)
 
 async def gen_thumb(videoid):
     anime = random.choice(files)
@@ -144,6 +152,11 @@ async def gen_thumb(videoid):
         text_w, text_h = draw.textsize(lyrics, font=arial)
         draw.text(((1280 - text_w)/2, 700), lyrics, fill="yellow", font=arial)
 
+        # Add random quote
+        quote = await fetch_quote()
+        text_w, text_h = draw.textsize(quote, font=arial)
+        draw.text(((1280 - text_w)/2, 750), quote, fill="cyan", font=arial)
+
         text_w, text_h = draw.textsize(f"Duration: {duration} Mins", font=arial)
         draw.text(((1280 - text_w)/2, 660), f"Duration: {duration} Mins", fill="white", font=arial)
 
@@ -153,4 +166,3 @@ async def gen_thumb(videoid):
     except Exception as e:
         print(e)
         return random_img_url
-
