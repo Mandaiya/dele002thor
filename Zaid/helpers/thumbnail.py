@@ -10,10 +10,10 @@ from youtubesearchpython.__future__ import VideosSearch
  
 MUSIC_BOT_NAME = "S-V-D Music"
 YOUTUBE_IMG_URLS = [
-    "https://telegra.ph/file/95d96663b73dbf278f28c.jpg",
-    "https://telegra.ph/file/2d541313460e3e10742c3.jpg",
-    "https://telegra.ph/file/5c3b30c9f2b1e6a35e0a2.jpg",
-    "https://telegra.ph/file/3f5d8071a2b4b3f57d8c9.jpg"
+    "https://telegra.ph/file/8e5a832da78d9cdc5472f.jpg",
+    "https://telegra.ph/file/6db754de9707eee737345.mp4",
+    "https://telegra.ph/file/ecc9233d3f09286fa560a.mp4",
+    "https://telegra.ph/file/0bc40f80a86e4d5e4927c.mp4"
 ]
 files = [] 
 
