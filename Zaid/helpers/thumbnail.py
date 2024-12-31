@@ -39,6 +39,16 @@ def add_corners(im):
     im.putalpha(mask)
  
  
+async def fetch_lyrics(videoid):
+    # Mock lyrics for demonstration
+    lyrics = [
+        "In the end, we are one.",
+        "Lost in the music of time.",
+        "Feel the rhythm of the night.",
+        "Chasing dreams in the dark."
+    ]
+    return random.choice(lyrics)
+
 async def gen_thumb(videoid):
     anime = random.choice(files)
     if os.path.isfile(f"cache/{videoid}_{anime}.png"):
@@ -65,16 +75,6 @@ async def gen_thumb(videoid):
                 thumbnail = result["thumbnails"][0]["url"].split("?")[0]
             except:
                 thumbnail = random_img_url  # Fallback to random URL if no thumbnail found
-
-            try:
-                views = result["viewCount"]["short"]
-            except:
-                views = "Unknown Views"
-
-            try:
-                channel = result["channel"]["name"]
-            except:
-                channel = "Unknown Channel"
 
         async with aiohttp.ClientSession() as session:
             async with session.get(thumbnail) as resp:
@@ -139,6 +139,11 @@ async def gen_thumb(videoid):
         except:
             pass
 
+        # Add lyrics
+        lyrics = await fetch_lyrics(videoid)
+        text_w, text_h = draw.textsize(lyrics, font=arial)
+        draw.text(((1280 - text_w)/2, 700), lyrics, fill="yellow", font=arial)
+
         text_w, text_h = draw.textsize(f"Duration: {duration} Mins", font=arial)
         draw.text(((1280 - text_w)/2, 660), f"Duration: {duration} Mins", fill="white", font=arial)
 
@@ -148,3 +153,4 @@ async def gen_thumb(videoid):
     except Exception as e:
         print(e)
         return random_img_url
+
