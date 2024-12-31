@@ -8,7 +8,7 @@ import aiohttp
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps, ImageChops
 from youtubesearchpython.__future__ import VideosSearch
  
-MUSIC_BOT_NAME = "Telethon Music"
+MUSIC_BOT_NAME = "S-V-D Music"
 YOUTUBE_IMG_URL = "https://telegra.ph/file/95d96663b73dbf278f28c.jpg"
 files = [] 
 
@@ -77,7 +77,7 @@ async def gen_thumb(videoid):
         image2 = image1.convert("RGBA")
         background = image2.filter(filter=ImageFilter.BoxBlur(30))
         enhancer = ImageEnhance.Brightness(background)
-        background = enhancer.enhance(0.6)
+        background = enhancer.enhance(1.5)
         cir = Image.open(f"thumbnail/IMG_20221129_201846_195.png") 
         image3 = changeImageSize(1280, 720, bg)
         circle = changeImageSize(1280, 720, cir)
