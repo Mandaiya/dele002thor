@@ -168,7 +168,7 @@ async def play(event):
             userid = sender.id
             titlegc = chat.title
             ctitle = await CHAT_TITLE(titlegc)
-            thumb = await gen_thumb(videoid)
+            thumb = await gen_thumb(videoid, chat_id)
             format = "best[height<=?720][width<=?1280]"
             hm, ytlink = await ytdl(format, url)
             if hm == 0:
