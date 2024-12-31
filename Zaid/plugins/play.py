@@ -178,23 +178,19 @@ async def play(event):
             else:
                  # Handle the error, maybe send a default thumbnail or an error message
                 await event.client.send_message(chat_id, "Thumbnail file not found.")
-                else:
-            try:
-                await call_py.join_group_call(
+            else:
+                try:
+                    await call_py.join_group_call(
                     chat_id,
                     AudioPiped(dl),
                     stream_type=StreamType().pulse_stream,
                 )
                 add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-                caption = f"➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>**\n\n✣ ✧Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({link})\n\n✣🔹**Ｓᴜɢɢᴇsᴛᴇᴅ🔹:** {from_user}"
+                caption = f"➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡ ..."
                 await event.client.send_file(chat_id, fotoplay, caption=caption, buttons=btnn)
-                thumb = f"cache/{videoid}_kaithumb.png"
-            if os.path.isfile(thumb):
-                await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
             except Exception as ep:
                 clear_queue(chat_id)
                 await botman.edit(f"`{ep}`")
-
     else:
         botman = await event.reply("➕ Downloading File...")
         dl = await replied.download_media()
