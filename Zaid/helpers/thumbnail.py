@@ -9,7 +9,12 @@ from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 from youtubesearchpython.__future__ import VideosSearch
  
 MUSIC_BOT_NAME = "S-V-D Music"
-YOUTUBE_IMG_URL = "https://telegra.ph/file/95d96663b73dbf278f28c.jpg"
+YOUTUBE_IMG_URLS = [
+    "https://telegra.ph/file/95d96663b73dbf278f28c.jpg",
+    "https://telegra.ph/file/2d541313460e3e10742c3.jpg",
+    "https://telegra.ph/file/5c3b30c9f2b1e6a35e0a2.jpg",
+    "https://telegra.ph/file/3f5d8071a2b4b3f57d8c9.jpg"
+]
 files = [] 
 
 for filename in os.listdir("./thumbnail"): 
@@ -38,13 +43,16 @@ async def gen_thumb(videoid):
     anime = random.choice(files)
     if os.path.isfile(f"cache/{videoid}_{anime}.png"):
         return f"cache/{videoid}_{anime}.png"
+    
     url = f"https://www.youtube.com/watch?v={videoid}"
+    random_img_url = random.choice(YOUTUBE_IMG_URLS)  # Randomly select a YouTube image
+
     try:
         results = VideosSearch(url, limit=1)
         for result in (await results.next())["result"]:
             try:
                 title = result["title"]
-                title = re.sub("\W+", " ", title)
+                title = re.sub("\\W+", " ", title)
                 title = title.title()
             except:
                 title = "Unsupported Title"
@@ -52,25 +60,35 @@ async def gen_thumb(videoid):
                 duration = result["duration"]
             except:
                 duration = "Unknown"
-            thumbnail = result["thumbnails"][0]["url"].split("?")[0]
+            
+            try:
+                thumbnail = result["thumbnails"][0]["url"].split("?")[0]
+            except:
+                thumbnail = random_img_url  # Fallback to random URL if no thumbnail found
+
             try:
                 views = result["viewCount"]["short"]
             except:
                 views = "Unknown Views"
+
             try:
                 channel = result["channel"]["name"]
             except:
                 channel = "Unknown Channel"
- 
+
         async with aiohttp.ClientSession() as session:
             async with session.get(thumbnail) as resp:
                 if resp.status == 200:
                     f = await aiofiles.open(f"cache/thumb{videoid}.png", mode="wb")
                     await f.write(await resp.read())
                     await f.close()
- 
-        
- 
+                else:
+                    async with session.get(random_img_url) as resp:
+                        if resp.status == 200:
+                            f = await aiofiles.open(f"cache/thumb{videoid}.png", mode="wb")
+                            await f.write(await resp.read())
+                            await f.close()
+
         youtube = Image.open(f"cache/thumb{videoid}.png")
         bg = Image.open(f"thumbnail/{anime}.png")
         image1 = changeImageSize(1280, 720, youtube)
@@ -83,7 +101,7 @@ async def gen_thumb(videoid):
         circle = changeImageSize(1280, 720, cir)
         image5 = image3.convert("RGBA")
         Image.alpha_composite(background, image5).save(f"cache/temp{videoid}.png")
- 
+
         Xcenter = youtube.width / 2
         Ycenter = youtube.height / 2
         x1 = Xcenter - 250
@@ -93,11 +111,12 @@ async def gen_thumb(videoid):
         logo = youtube.crop((x1, y1, x2, y2))
         logo.thumbnail((520, 520), Image.ANTIALIAS)
         logo.save(f"cache/chop{videoid}.png")
+
         if not os.path.isfile(f"cache/cropped{videoid}.png"):
             im = Image.open(f"cache/chop{videoid}.png").convert('RGBA')
             add_corners(im)
             im.save(f"cache/cropped{videoid}.png")
- 
+
         crop_img = Image.open(f"cache/cropped{videoid}.png")
         logo = crop_img.convert("RGBA")
         logo.thumbnail((365, 365), Image.ANTIALIAS)
@@ -107,32 +126,25 @@ async def gen_thumb(videoid):
         background.paste(circle, mask=circle)
         draw = ImageDraw.Draw(background)
         font = ImageFont.truetype("thumbnail/font2.ttf", 45)
-        font2 = ImageFont.truetype("thumbnail/font2.ttf", 70)
         arial = ImageFont.truetype("thumbnail/font2.ttf", 30)
-        name_font = ImageFont.truetype("thumbnail/font.ttf", 30)
         para = textwrap.wrap(title, width=32)
-        j = 0
+
         try:
             if para[0]:
                 text_w, text_h = draw.textsize(f"{para[0]}", font=font)
-                draw.text(((1280 - text_w)/2, 530), f"{para[0]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
+                draw.text(((1280 - text_w)/2, 530), f"{para[0]}", fill="white", font=font)
             if para[1]:
                 text_w, text_h = draw.textsize(f"{para[1]}", font=font)
-                draw.text(((1280 - text_w)/2, 580), f"{para[1]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
+                draw.text(((1280 - text_w)/2, 580), f"{para[1]}", fill="white", font=font)
         except:
             pass
+
         text_w, text_h = draw.textsize(f"Duration: {duration} Mins", font=arial)
         draw.text(((1280 - text_w)/2, 660), f"Duration: {duration} Mins", fill="white", font=arial)
- 
- 
- 
-        
-        try:
-            os.remove(f"cache/thumb{videoid}.png")
-        except:
-            pass
+
         background.save(f"cache/{videoid}_{anime}.png")
         return f"cache/{videoid}_{anime}.png"
+
     except Exception as e:
         print(e)
-        return YOUTUBE_IMG_URL
+        return random_img_url
