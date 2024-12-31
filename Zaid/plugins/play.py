@@ -183,7 +183,7 @@ async def play(event):
                         stream_type=StreamType().pulse_stream,
                     )
                     add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
-                    caption = f"</b>➜ ⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌></b>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌\n\n✧ **Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({url})\n\n⏱ **⧖ T-Ƭᴀᴋᴇɴ ⧗ :** {duration} ᴍɪɴᴜᴛᴇs\n\n🥀 **>⚙️🧑‍💻 User :** {from_user}"
+                    caption = f"➜ ⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>\n\n🌌 𝗙𝗿𝗼𝗺 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗲 🌌\n\n✧ **Sᴏɴɢ Nᴀᴍᴇ ✦ :** [{songname}]({url})\n\n⏱ **⧖ T-Ƭᴀᴋᴇɴ ⧗ :** {duration} ᴍɪɴᴜᴛᴇs\n\n🥀 **>⚙️🧑‍💻 User :** {from_user}"
                     await botman.delete()
                     await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
                 except Exception as ep:
@@ -237,7 +237,7 @@ async def vc_end(event, perm):
         pass
     if chat_id in QUEUE:
         clear_queue(chat_id)
-        await event.reply(f"<b>➤ ѕєє үσυ ηєχт тιмє ⌛| queries contact @universe_we_are<b>")
+        await event.reply(f"➤ ѕєє үσυ ηєχт тιмє ⌛| queries contact @universe_we_are")
     else:
         await event.reply("**The music/video isn’t playing, Try playing any song /play song name ~**")
 
@@ -401,7 +401,7 @@ async def vplay(event):
                         url,
                         "Video",
                         RESOLUSI)
-                    caption = f"➜ <b>⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>\n\n✧ Sᴏɴɢ Nᴀᴍᴇ ✦:** [{songname}]({url})\n**⧖ T-Ƭᴀᴋᴇɴ ⧗:** {duration} ᴍɪɴᴜᴛᴇs\n>⚙️🧑‍💻 User:** {from_user}"
+                    caption = f"➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡\n╌╌╌╌╌╌╌⑊◞◠◟╌╌╌>\n\n✧ Sᴏɴɢ Nᴀᴍᴇ ✦:** [{songname}]({url})\n**⧖ T-Ƭᴀᴋᴇɴ ⧗:** {duration} ᴍɪɴᴜᴛᴇs\n>⚙️🧑‍💻 User:** {from_user}"
                     await xnxx.delete()
                     await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
                 except Exception as ep:
@@ -466,7 +466,7 @@ async def vc_skip(event, perm):
     if len(event.text.split()) < 2:
         op = await skip_current_song(chat_id)
         if op == 0:
-            await event.reply("<b>**➤ ѕєє үσυ ηєχт тιмє ⌛| queries contact @universe_we_are**<b>")
+            await event.reply("**➤ ѕєє үσυ ηєχт тιмє ⌛| queries contact @universe_we_are**")
         elif op == 1:
             await event.reply("empty queue, leaving you | Byee-buyee 😒")
         else:
