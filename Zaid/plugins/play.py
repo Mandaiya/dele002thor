@@ -181,16 +181,19 @@ async def play(event):
             else:
                 try:
                     await call_py.join_group_call(
-                    chat_id,
-                    AudioPiped(dl),
-                    stream_type=StreamType().pulse_stream,
-                )
-                add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-                caption = f"➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡ ..."
-                await event.client.send_file(chat_id, fotoplay, caption=caption, buttons=btnn)
-            except Exception as ep:
-                clear_queue(chat_id)
-                await botman.edit(f"`{ep}`")
+                        chat_id,
+                        AudioPiped(
+                            ytlink,
+                        ),
+                        stream_type=StreamType().pulse_stream,
+                    )
+                    add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
+                    caption = f"➜⚡ 𝐂Ø𝐍𝐍Ξ𝐂Ƭ𝐈Ø𝐍 | 𝙀𝙎ƬΛ𝐁𝐋Ɨ𝙎𝙃ΞĐ ⚡ ..."
+                    await botman.delete()
+                    await event.client.send_file(chat_id, thumb, caption=caption, buttons=btnn)
+                except Exception as ep:
+                    clear_queue(chat_id)
+                    await botman.edit(f"`{ep}`")
     else:
         botman = await event.reply("➕ Downloading File...")
         dl = await replied.download_media()
