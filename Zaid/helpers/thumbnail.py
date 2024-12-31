@@ -1,13 +1,12 @@
 import os
+import random
 import re
 import textwrap
-import random
 import aiofiles
 import aiohttp
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps, ImageChops
 from youtubesearchpython.__future__ import VideosSearch
- 
-MUSIC_BOT_NAME = "S-V-D Music"
+
 YOUTUBE_IMG_URLS = []
 
 FRIENDSHIP_QUOTES = [
@@ -44,8 +43,9 @@ RANDOM_URLS = [
 YOUTUBE_IMG_URLS.extend(RANDOM_URLS)
 RANDOM_QUOTES = FRIENDSHIP_QUOTES + LOVE_QUOTES + MOTIVATION_QUOTES + COMEDY_QUOTES
 
+files = [f[:-4] for f in os.listdir("./thumbnail") if f.endswith("png")]
+
 async def fetch_lyrics(videoid):
-    # Mock lyrics for demonstration
     lyrics = [
         "In the end, we are one.",
         "Lost in the music of time.",
@@ -57,32 +57,36 @@ async def fetch_lyrics(videoid):
 async def fetch_quote():
     return random.choice(RANDOM_QUOTES)
 
+def changeImageSize(maxWidth, maxHeight, image):
+    widthRatio = maxWidth / image.size[0]
+    heightRatio = maxHeight / image.size[1]
+    newWidth = int(widthRatio * image.size[0])
+    newHeight = int(heightRatio * image.size[1])
+    newImage = image.resize((newWidth, newHeight))
+    return newImage
+
+def add_corners(im):
+    bigsize = (im.size[0] * 3, im.size[1] * 3)
+    mask = Image.new('L', bigsize, 0)
+    ImageDraw.Draw(mask).ellipse((0, 0) + bigsize, fill=255)
+    mask = mask.resize(im.size, Image.ANTIALIAS)
+    mask = ImageChops.darker(mask, im.split()[-1])
+    im.putalpha(mask)
+
 async def gen_thumb(videoid):
     anime = random.choice(files)
     if os.path.isfile(f"cache/{videoid}_{anime}.png"):
         return f"cache/{videoid}_{anime}.png"
     
     url = f"https://www.youtube.com/watch?v={videoid}"
-    random_img_url = random.choice(YOUTUBE_IMG_URLS)  # Randomly select a YouTube image
+    random_img_url = random.choice(YOUTUBE_IMG_URLS)
 
     try:
         results = VideosSearch(url, limit=1)
         for result in (await results.next())["result"]:
-            try:
-                title = result["title"]
-                title = re.sub("\\W+", " ", title)
-                title = title.title()
-            except:
-                title = "Unsupported Title"
-            try:
-                duration = result["duration"]
-            except:
-                duration = "Unknown"
-            
-            try:
-                thumbnail = result["thumbnails"][0]["url"].split("?")[0]
-            except:
-                thumbnail = random_img_url  # Fallback to random URL if no thumbnail found
+            title = re.sub("\\W+", " ", result.get("title", "Unsupported Title")).title()
+            duration = result.get("duration", "Unknown")
+            thumbnail = result.get("thumbnails", [{}])[0].get("url", random_img_url).split("?")[0]
 
         async with aiohttp.ClientSession() as session:
             async with session.get(thumbnail) as resp:
@@ -112,11 +116,7 @@ async def gen_thumb(videoid):
 
         Xcenter = youtube.width / 2
         Ycenter = youtube.height / 2
-        x1 = Xcenter - 250
-        y1 = Ycenter - 250
-        x2 = Xcenter + 250
-        y2 = Ycenter + 250
-        logo = youtube.crop((x1, y1, x2, y2))
+        logo = youtube.crop((Xcenter - 250, Ycenter - 250, Xcenter + 250, Ycenter + 250))
         logo.thumbnail((520, 520), Image.ANTIALIAS)
         logo.save(f"cache/chop{videoid}.png")
 
@@ -137,27 +137,19 @@ async def gen_thumb(videoid):
         arial = ImageFont.truetype("thumbnail/font2.ttf", 30)
         para = textwrap.wrap(title, width=32)
 
-        try:
-            if para[0]:
-                text_w, text_h = draw.textsize(f"{para[0]}", font=font)
-                draw.text(((1280 - text_w)/2, 530), f"{para[0]}", fill="white", font=font)
-            if para[1]:
-                text_w, text_h = draw.textsize(f"{para[1]}", font=font)
-                draw.text(((1280 - text_w)/2, 580), f"{para[1]}", fill="white", font=font)
-        except:
-            pass
+        for i, line in enumerate(para[:2]):
+            text_w, _ = draw.textsize(line, font=font)
+            draw.text(((1280 - text_w)/2, 530 + i * 50), line, fill="white", font=font)
 
-        # Add lyrics
         lyrics = await fetch_lyrics(videoid)
-        text_w, text_h = draw.textsize(lyrics, font=arial)
+        text_w, _ = draw.textsize(lyrics, font=arial)
         draw.text(((1280 - text_w)/2, 700), lyrics, fill="yellow", font=arial)
 
-        # Add random quote
         quote = await fetch_quote()
-        text_w, text_h = draw.textsize(quote, font=arial)
+        text_w, _ = draw.textsize(quote, font=arial)
         draw.text(((1280 - text_w)/2, 750), quote, fill="cyan", font=arial)
 
-        text_w, text_h = draw.textsize(f"Duration: {duration} Mins", font=arial)
+        text_w, _ = draw.textsize(f"Duration: {duration} Mins", font=arial)
         draw.text(((1280 - text_w)/2, 660), f"Duration: {duration} Mins", fill="white", font=arial)
 
         background.save(f"cache/{videoid}_{anime}.png")
