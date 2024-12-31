@@ -8,15 +8,14 @@ import aiohttp
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps, ImageChops
 from youtubesearchpython.__future__ import VideosSearch
  
-MUSIC_BOT_NAME = "SVD Musicz"
-YOUTUBE_IMG_URL = ["https://envs.sh/oan.jpg",
-                   "https://envs.sh/oan.jpg",
-                   "https://envs.sh/oaI.jpg",
-                   "https://envs.sh/oaB.jpg",
-                   "https://envs.sh/kcg.jpg"
-                  ]
-CUSTOM_THUMBNAIL = "kaithumb.png" 
+MUSIC_BOT_NAME = "Telethon Music"
+YOUTUBE_IMG_URL = "https://telegra.ph/file/95d96663b73dbf278f28c.jpg"
+files = [] 
 
+for filename in os.listdir("./thumbnail"): 
+     if filename.endswith("png"): 
+         files.append(filename[:-4])
+ 
 def changeImageSize(maxWidth, maxHeight, image):
     widthRatio = maxWidth / image.size[0]
     heightRatio = maxHeight / image.size[1]
@@ -35,9 +34,10 @@ def add_corners(im):
     im.putalpha(mask)
  
  
-async def gen_thumb(videoid, chat_id):
-    if os.path.isfile(f"cache/{videoid}_kaithumb.png"):
-        return f"cache/{videoid}_kaithumb.png"
+async def gen_thumb(videoid):
+    anime = random.choice(files)
+    if os.path.isfile(f"cache/{videoid}_{anime}.png"):
+        return f"cache/{videoid}_{anime}.png"
     url = f"https://www.youtube.com/watch?v={videoid}"
     try:
         results = VideosSearch(url, limit=1)
@@ -72,10 +72,10 @@ async def gen_thumb(videoid, chat_id):
         
  
         youtube = Image.open(f"cache/thumb{videoid}.png")
-        bg = Image.open(f"thumbnail/{CUSTOM_THUMBNAIL}")
+        bg = Image.open(f"thumbnail/{anime}.png")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
-        background = image2.filter(filter=ImageFilter.BoxBlur(50))
+        background = image2.filter(filter=ImageFilter.BoxBlur(30))
         enhancer = ImageEnhance.Brightness(background)
         background = enhancer.enhance(0.6)
         cir = Image.open(f"thumbnail/IMG_20221129_201846_195.png") 
@@ -131,10 +131,8 @@ async def gen_thumb(videoid, chat_id):
             os.remove(f"cache/thumb{videoid}.png")
         except:
             pass
-        background.save(f"cache/{videoid}_kaithumb.png")
-        return f"cache/{videoid}_kaithumb.png"
+        background.save(f"cache/{videoid}_{anime}.png")
+        return f"cache/{videoid}_{anime}.png"
     except Exception as e:
         print(e)
-        # Choose a random thumbnail from the list
-        random_thumb = random.choice(YOUTUBE_IMG_URL)
-        return random_thumb
+        return YOUTUBE_IMG_URL
