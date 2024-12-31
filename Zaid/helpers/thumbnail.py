@@ -1,62 +1,36 @@
 import os
-import random
 import re
 import textwrap
+import random
 import aiofiles
 import aiohttp
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps, ImageChops
 from youtubesearchpython.__future__ import VideosSearch
-
-YOUTUBE_IMG_URLS = []
-
-FRIENDSHIP_QUOTES = [
-    "A friend is someone who knows all about you and still loves you.",
-    "Friendship is the only cement that will ever hold the world together.",
-    "Friends are the siblings we choose for ourselves."
+ 
+MUSIC_BOT_NAME = "S-V-D Music"
+YOUTUBE_IMG_URLS = [
+    "https://telegra.ph/file/8e5a832da78d9cdc5472f.jpg",
+    "https://telegra.ph/file/6db754de9707eee737345.mp4",
+    "https://telegra.ph/file/ecc9233d3f09286fa560a.mp4",
+    "https://telegra.ph/file/0bc40f80a86e4d5e4927c.mp4",
+    "https://telegra.ph/file/e7faedcc78e423368c116.jpg",
+    "https://telegra.ph/file/237dc61006b890ab9aba5.jpg",
+    "https://telegra.ph/file/049da2a0678db379dc6ca.jpg",
+    "https://telegra.ph/file/cd996463de11729bc12ed.mp4",
+    "https://telegra.ph/file/48aaf9a2343f61a037a26.mp4",
+    "https://telegra.ph/file/9e05c8a1c60f2e7999a18.jpg",
+    "https://telegra.ph/file/9cad7158203ae478bac44.jpg",
+    "https://telegra.ph/file/ec34e2af0f74f39cc6716.mp4",
+    "https://telegra.ph/file/4457f58eae3fd1006ac8b.jpg",
+    "https://telegra.ph/file/594ee58dca4dc1e555c7d.mp4",
+    
 ]
+files = [] 
 
-LOVE_QUOTES = [
-    "Love is composed of a single soul inhabiting two bodies.",
-    "The best thing to hold onto in life is each other.",
-    "You know you're in love when you can't fall asleep because reality is finally better than your dreams."
-]
-
-MOTIVATION_QUOTES = [
-    "Don't watch the clock; do what it does. Keep going.",
-    "The harder you work for something, the greater you'll feel when you achieve it.",
-    "Believe you can and you're halfway there."
-]
-
-COMEDY_QUOTES = [
-    "I'm not arguing, I'm just explaining why I'm right.",
-    "I finally realized that people are prisoners of their phones... that's why it's called a 'cell' phone.",
-    "Some people graduate with honors, I am just honored to graduate."
-]
-
-RANDOM_URLS = [
-    "https://telegra.ph/file/95d96663b73dbf278f28c.jpg",
-    "https://telegra.ph/file/2d541313460e3e10742c3.jpg",
-    "https://telegra.ph/file/5c3b30c9f2b1e6a35e0a2.jpg",
-    "https://telegra.ph/file/3f5d8071a2b4b3f57d8c9.jpg"
-]
-
-YOUTUBE_IMG_URLS.extend(RANDOM_URLS)
-RANDOM_QUOTES = FRIENDSHIP_QUOTES + LOVE_QUOTES + MOTIVATION_QUOTES + COMEDY_QUOTES
-
-files = [f[:-4] for f in os.listdir("./thumbnail") if f.endswith("png")]
-
-async def fetch_lyrics(videoid):
-    lyrics = [
-        "In the end, we are one.",
-        "Lost in the music of time.",
-        "Feel the rhythm of the night.",
-        "Chasing dreams in the dark."
-    ]
-    return random.choice(lyrics)
-
-async def fetch_quote():
-    return random.choice(RANDOM_QUOTES)
-
+for filename in os.listdir("./thumbnail"): 
+     if filename.endswith("png"): 
+         files.append(filename[:-4])
+ 
 def changeImageSize(maxWidth, maxHeight, image):
     widthRatio = maxWidth / image.size[0]
     heightRatio = maxHeight / image.size[1]
@@ -64,7 +38,8 @@ def changeImageSize(maxWidth, maxHeight, image):
     newHeight = int(heightRatio * image.size[1])
     newImage = image.resize((newWidth, newHeight))
     return newImage
-
+ 
+ 
 def add_corners(im):
     bigsize = (im.size[0] * 3, im.size[1] * 3)
     mask = Image.new('L', bigsize, 0)
@@ -72,21 +47,44 @@ def add_corners(im):
     mask = mask.resize(im.size, Image.ANTIALIAS)
     mask = ImageChops.darker(mask, im.split()[-1])
     im.putalpha(mask)
-
+ 
+ 
 async def gen_thumb(videoid):
     anime = random.choice(files)
     if os.path.isfile(f"cache/{videoid}_{anime}.png"):
         return f"cache/{videoid}_{anime}.png"
     
     url = f"https://www.youtube.com/watch?v={videoid}"
-    random_img_url = random.choice(YOUTUBE_IMG_URLS)
+    random_img_url = random.choice(YOUTUBE_IMG_URLS)  # Randomly select a YouTube image
 
     try:
         results = VideosSearch(url, limit=1)
         for result in (await results.next())["result"]:
-            title = re.sub("\\W+", " ", result.get("title", "Unsupported Title")).title()
-            duration = result.get("duration", "Unknown")
-            thumbnail = result.get("thumbnails", [{}])[0].get("url", random_img_url).split("?")[0]
+            try:
+                title = result["title"]
+                title = re.sub("\\W+", " ", title)
+                title = title.title()
+            except:
+                title = "Unsupported Title"
+            try:
+                duration = result["duration"]
+            except:
+                duration = "Unknown"
+            
+            try:
+                thumbnail = result["thumbnails"][0]["url"].split("?")[0]
+            except:
+                thumbnail = random_img_url  # Fallback to random URL if no thumbnail found
+
+            try:
+                views = result["viewCount"]["short"]
+            except:
+                views = "Unknown Views"
+
+            try:
+                channel = result["channel"]["name"]
+            except:
+                channel = "Unknown Channel"
 
         async with aiohttp.ClientSession() as session:
             async with session.get(thumbnail) as resp:
@@ -116,7 +114,11 @@ async def gen_thumb(videoid):
 
         Xcenter = youtube.width / 2
         Ycenter = youtube.height / 2
-        logo = youtube.crop((Xcenter - 250, Ycenter - 250, Xcenter + 250, Ycenter + 250))
+        x1 = Xcenter - 250
+        y1 = Ycenter - 250
+        x2 = Xcenter + 250
+        y2 = Ycenter + 250
+        logo = youtube.crop((x1, y1, x2, y2))
         logo.thumbnail((520, 520), Image.ANTIALIAS)
         logo.save(f"cache/chop{videoid}.png")
 
@@ -137,19 +139,17 @@ async def gen_thumb(videoid):
         arial = ImageFont.truetype("thumbnail/font2.ttf", 30)
         para = textwrap.wrap(title, width=32)
 
-        for i, line in enumerate(para[:2]):
-            text_w, _ = draw.textsize(line, font=font)
-            draw.text(((1280 - text_w)/2, 530 + i * 50), line, fill="white", font=font)
+        try:
+            if para[0]:
+                text_w, text_h = draw.textsize(f"{para[0]}", font=font)
+                draw.text(((1280 - text_w)/2, 530), f"{para[0]}", fill="white", font=font)
+            if para[1]:
+                text_w, text_h = draw.textsize(f"{para[1]}", font=font)
+                draw.text(((1280 - text_w)/2, 580), f"{para[1]}", fill="white", font=font)
+        except:
+            pass
 
-        lyrics = await fetch_lyrics(videoid)
-        text_w, _ = draw.textsize(lyrics, font=arial)
-        draw.text(((1280 - text_w)/2, 700), lyrics, fill="yellow", font=arial)
-
-        quote = await fetch_quote()
-        text_w, _ = draw.textsize(quote, font=arial)
-        draw.text(((1280 - text_w)/2, 750), quote, fill="cyan", font=arial)
-
-        text_w, _ = draw.textsize(f"Duration: {duration} Mins", font=arial)
+        text_w, text_h = draw.textsize(f"Duration: {duration} Mins", font=arial)
         draw.text(((1280 - text_w)/2, 660), f"Duration: {duration} Mins", fill="white", font=arial)
 
         background.save(f"cache/{videoid}_{anime}.png")
