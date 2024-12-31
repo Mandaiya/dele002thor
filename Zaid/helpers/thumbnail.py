@@ -15,6 +15,16 @@ YOUTUBE_IMG_URLS = [
     "https://telegra.ph/file/ecc9233d3f09286fa560a.mp4",
     "https://telegra.ph/file/0bc40f80a86e4d5e4927c.mp4"
 ]
+
+async def fetch_lyrics(videoid):
+    # Mock lyrics for demonstration
+    lyrics = [
+        "In the end, we are one.",
+        "Lost in the music of time.",
+        "Feel the rhythm of the night.",
+        "Chasing dreams in the dark."
+    ]
+    return random.choice(lyrics)
 files = [] 
 
 for filename in os.listdir("./thumbnail"): 
@@ -38,16 +48,6 @@ def add_corners(im):
     mask = ImageChops.darker(mask, im.split()[-1])
     im.putalpha(mask)
  
- 
-async def fetch_lyrics(videoid):
-    # Mock lyrics for demonstration
-    lyrics = [
-        "In the end, we are one.",
-        "Lost in the music of time.",
-        "Feel the rhythm of the night.",
-        "Chasing dreams in the dark."
-    ]
-    return random.choice(lyrics)
 
 async def gen_thumb(videoid):
     anime = random.choice(files)
