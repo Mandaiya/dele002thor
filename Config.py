@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 class Config(object):
     API_ID = os.environ.get("API_ID", "28045580")
-    API_HASH = os.environ.get("API_HASH", "83001e24418ec7f54bfe95d4e390419fd")
+    API_HASH = os.environ.get("API_HASH", "83001e24418ec7f54bfe95d4e390419f")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
     STRING_SESSION = os.environ.get("STRING_SESSION", None)
     MANAGEMENT_MODE = os.environ.get("MANAGEMENT_MODE", True)
